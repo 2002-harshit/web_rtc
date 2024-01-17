@@ -7,14 +7,28 @@ const configuration = {
 };
 let ws = new WebSocket("wss://192.168.1.209:3000");
 
-ws.onopen = () => {
+ws.onopen = async () => {
   alert("Client connected to signalling server");
   peerConnection = new RTCPeerConnection(configuration);
+  localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+  localStream.getTracks().forEach(track => {
+    peerConnection.addTrack(track, localStream);
+  });
+
+  peerConnection.ontrack = event => {
+    const remoteAudio = document.getElementById("remoteAudio");
+    if (remoteAudio.srcObject !== event.streams[0]) {
+      remoteAudio.srcObject = event.streams[0];
+    }
+  };
   document.getElementById("startButton").disabled = false;
 };
 
 ws.onmessage = msg => {
   let data = JSON.parse(msg.data);
+
+  console.log(data);
 
   try {
     switch (data.type) {
@@ -36,6 +50,7 @@ ws.onmessage = msg => {
                 target: data.name,
               })
             );
+            console.log(`Answer sent to ${data.name}`);
           });
         break;
       case "answer":
@@ -91,11 +106,6 @@ document
         alert("Enter the receiver's name");
         return;
       }
-      localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-
-      localStream.getTracks().forEach(track => {
-        peerConnection.addTrack(track, localStream);
-      });
 
       peerConnection.createOffer().then(offer => {
         peerConnection.setLocalDescription(offer).then(() => {
@@ -107,6 +117,7 @@ document
               target: receiver,
             })
           );
+          console.log(`Offer sent to ${receiver}`);
         });
       });
 
@@ -120,20 +131,14 @@ document
               target: receiver,
             })
           );
+          console.log(`Candidate sent to ${receiver}`);
         }
       };
 
       peerConnection.onconnectionstatechange = () => {
         if (peerConnection.connectionState === "connected") {
           document.getElementById("status").textContent = "Connected";
-          console.log("Peers connected");
-        }
-      };
-
-      peerConnection.ontrack = event => {
-        const remoteAudio = document.getElementById("remoteAudio");
-        if (remoteAudio.srcObject !== event.streams[0]) {
-          remoteAudio.srcObject = event.streams[0];
+          console.log(`${sender}Peers connected`);
         }
       };
 
