@@ -11,8 +11,8 @@ app.use(express.static("public"));
 
 const server = https.createServer(
   {
-    key: fs.readFileSync("key.pem"),
-    cert: fs.readFileSync("cert.pem"),
+    key: fs.readFileSync("localhost+2-key.pem"),
+    cert: fs.readFileSync("localhost+2.pem"),
   },
   app
 );

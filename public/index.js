@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 let localStream = null;
 let peerConnection = null;
 let sender = null;
