@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WebRTC Audio Call</title>
+    <style>
+      /* Add some basic styling */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+      }
+
+      #app {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      input {
+        margin: 10px;
+      }
+
+      #controls {
+        margin: 5px;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app">
+      <h1>WebRTC Audio Call</h1>
+      <span>Sender: </span
+      ><input type="text" name="unique_sender_name" value="harshit" />
+      <span>Receiver: </span
+      ><input type="text" name="unique_receiver_name" value="peeya" />
+      <div id="status">Not connected</div>
+      <div id="controls">
+        <button id="register">Register</button>
+        <button id="startButton" disabled>Start Call</button>
+        <button id="hangUpButton" disabled>Hang Up</button>
+      </div>
+      <audio id="localAudio" autoplay muted></audio>
+      <audio id="remoteAudio" autoplay></audio>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
+</html>
