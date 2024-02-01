@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WebRTC Audio Call</title>
+    <title>WebRTC Audio Call with Music Streaming</title>
     <style>
       /* Add some basic styling */
       body {
@@ -32,24 +32,34 @@
         margin: 5px;
         text-align: center;
       }
+
+      #fileAudioControl {
+        margin-top: 10px;
+      }
     </style>
   </head>
 
   <body>
     <div id="app">
-      <h1>WebRTC Audio Call</h1>
-      <span>Sender: </span
-      ><input type="text" name="unique_sender_name" value="harshit" />
-      <span>Receiver: </span
-      ><input type="text" name="unique_receiver_name" value="peeya" />
+      <h1>WebRTC Audio Call with Music Streaming</h1>
+      <span>Sender: </span><input type="text" name="unique_sender_name" />
+      <span>Receiver: </span><input type="text" name="unique_receiver_name" />
       <div id="status">Not connected</div>
       <div id="controls">
-        <button id="register">Register</button>
+        <button id="register" disabled>Register</button>
         <button id="startButton" disabled>Start Call</button>
         <button id="hangUpButton" disabled>Hang Up</button>
+        <button id="pauseButton" hidden>Pause Call</button>
       </div>
-      <audio id="localAudio" autoplay muted></audio>
+      <!-- <audio id="localAudio" autoplay muted></audio> -->
       <audio id="remoteAudio" autoplay></audio>
+      <!-- <audio id="musicAudio" hidden>
+        <source
+          src="lovex27s-serenade-valentines-day-188266.mp3"
+          type="audio/mpeg"
+        />
+        Your browser does not support the audio element.
+      </audio> -->
     </div>
 
     <script src="index.js"></script>
