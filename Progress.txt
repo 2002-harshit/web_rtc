@@ -1,0 +1,10 @@
+music is done, but you can still hear the other person, when you have paused him, easy workarounds, have a mute functionality
+
+function muteRemoteAudio(mute) {
+    // Assuming `peerConnection` is your RTCPeerConnection instance
+    peerConnection.getReceivers().forEach(receiver => {
+        if (receiver.track && receiver.track.kind === "audio") {
+            receiver.track.enabled = !mute;
+        }
+    });
+}
