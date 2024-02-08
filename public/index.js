@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 "use strict";
+
+import Recorder from "./recording.js";
+
 let localStream = null;
 let peerConnection = null;
 const registerButton = document.getElementById("register");
@@ -8,9 +11,13 @@ const hangUpButton = document.getElementById("hangUpButton");
 const senderField = document.querySelector(`[name="unique_sender_name"]`);
 const receiverField = document.querySelector(`[name="unique_receiver_name"]`);
 const pauseButton = document.getElementById("pauseButton");
+const startRecordButton = document.getElementById("startRecordButton");
+const pauseRecordButton = document.getElementById("pauseRecordButton");
+const stopRecordButton = document.getElementById("stopRecordButton");
 let audioBufferCache = null;
 let audioContext = null;
 const filePath = "lovex27s-serenade-valentines-day-188266.mp3";
+let recorder = null;
 
 // const musicAudio = document.getElementById("musicAudio");
 let isPaused = false;
@@ -196,6 +203,8 @@ startButton.addEventListener("click", async event => {
     startButton.disabled = true;
     hangUpButton.disabled = false;
     pauseButton.hidden = false;
+
+    recorder = new Recorder(peerConnection);
   } catch (error) {
     alert(error);
   }
@@ -325,3 +334,13 @@ async function fetchAndDecodeAudio(audioContext, audioFilePath) {
 
   return audioBuffer;
 }
+
+startRecordButton.addEventListener("click", function () {
+  recorder.start();
+});
+pauseRecordButton.addEventListener("click", function () {
+  recorder.pause();
+});
+stopRecordButton.addEventListener("click", function () {
+  recorder.stop();
+});
